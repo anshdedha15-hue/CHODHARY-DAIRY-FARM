@@ -1,0 +1,6 @@
+{
+  "name": "Choudhary Dairy Farm - Pure Milk & Dairy Products",
+  "description": "Farm-fresh cow & buffalo milk, pure desi ghee, butter, curd and cream from Choudhary Dairy Farm in Old Gardhi Mendu, Delhi. Call 8860222844.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
