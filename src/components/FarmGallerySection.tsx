@@ -58,8 +58,9 @@ export const FarmGallerySection: React.FC<FarmGallerySectionProps> = ({
                 />
 
                 {/* Overlay Badge */}
-                <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-xs text-amber-300 text-[10px] font-semibold px-2 py-0.5 rounded border border-white/10">
-                  {product.category === 'milk' ? 'Fresh Milk Photo' : 'Handcrafted Dairy'}
+                <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-xs text-amber-300 text-[10px] font-semibold px-2 py-0.5 rounded border border-white/10 flex items-center gap-1">
+                  <span>{product.priceDisplay}</span>
+                  <span className="text-stone-400 font-normal">/{product.priceUnit}</span>
                 </div>
 
                 <div className="absolute inset-0 bg-stone-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -73,11 +74,16 @@ export const FarmGallerySection: React.FC<FarmGallerySectionProps> = ({
               {/* Caption */}
               <div className="p-3.5 bg-stone-800/90 flex items-center justify-between">
                 <div>
-                  <h4 className="text-sm font-semibold text-white group-hover:text-amber-300 transition-colors">
-                    {product.name}
-                  </h4>
+                  <div className="flex items-center gap-2">
+                    <h4 className="text-sm font-semibold text-white group-hover:text-amber-300 transition-colors">
+                      {product.name}
+                    </h4>
+                    <span className="text-[11px] font-bold text-amber-300">
+                      {product.priceDisplay}
+                    </span>
+                  </div>
                   <p className="text-[11px] text-stone-400">
-                    Butterfat: <strong className="text-stone-200">{product.fatContent}</strong> · {product.packaging[0]}
+                    Butterfat: <strong className="text-stone-200">{product.fatContent}</strong> · {product.packaging[0].split(' - ')[0]}
                   </p>
                 </div>
                 <Eye className="w-4 h-4 text-stone-500 group-hover:text-amber-400 transition-colors shrink-0 ml-2" />

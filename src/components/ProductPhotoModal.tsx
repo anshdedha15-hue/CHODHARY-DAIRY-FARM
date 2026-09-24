@@ -50,13 +50,23 @@ export const ProductPhotoModal: React.FC<ProductPhotoModalProps> = ({
               {product.name}
             </h3>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-xl text-stone-500 hover:text-stone-900 hover:bg-stone-200 transition-colors"
-            aria-label="Close photo view"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-4">
+            <div className="text-right hidden sm:block">
+              <span className="text-xl font-serif-display font-extrabold text-emerald-900 block leading-tight">
+                {product.priceDisplay}
+              </span>
+              <span className="text-[11px] text-stone-500 font-medium">
+                per {product.priceUnit}
+              </span>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-xl text-stone-500 hover:text-stone-900 hover:bg-stone-200 transition-colors"
+              aria-label="Close photo view"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Modal Body */}
@@ -73,9 +83,10 @@ export const ProductPhotoModal: React.FC<ProductPhotoModalProps> = ({
             />
             
             {/* Packaging / Spec Badge on Photo */}
-            <div className="absolute top-3 left-3 bg-stone-900/90 backdrop-blur-xs text-white text-xs px-3 py-1.5 rounded-lg border border-stone-700 flex items-center gap-1.5">
+            <div className="absolute top-3 left-3 bg-stone-900/90 backdrop-blur-xs text-white text-xs px-3 py-1.5 rounded-lg border border-stone-700 flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               <span>Choudhary Dairy Farm · Fresh Batch</span>
+              <span className="text-amber-400 font-bold ml-1">{product.priceDisplay} / {product.priceUnit}</span>
             </div>
           </div>
 

@@ -29,6 +29,16 @@ export const MilkCalculator: React.FC<MilkCalculatorProps> = ({ onPreFillEnquiry
 
   const monthlyLitres = Math.round(dailyLitres * 30);
 
+  const pricePerLitre =
+    preferredMilk === 'cow'
+      ? 80
+      : preferredMilk === 'buffalo'
+      ? 120
+      : 100;
+
+  const estimatedDailyCost = dailyLitres * pricePerLitre;
+  const estimatedMonthlyCost = monthlyLitres * pricePerLitre;
+
   const handleApplyToEnquiry = () => {
     const milkName =
       preferredMilk === 'cow'
@@ -37,7 +47,7 @@ export const MilkCalculator: React.FC<MilkCalculatorProps> = ({ onPreFillEnquiry
         ? 'Buffalo Milk'
         : 'Fresh Milk';
 
-    const note = `Estimated Daily Requirement: ${dailyLitres} Litres/day (~${monthlyLitres} Litres/month) for ${adults} Adults & ${children} Children. Preferred: ${milkName}.`;
+    const note = `Estimated Daily Requirement: ${dailyLitres} Litres/day (~${monthlyLitres} Litres/month, est. ₹${estimatedMonthlyCost.toLocaleString('en-IN')}) for ${adults} Adults & ${children} Children. Preferred: ${milkName} @ ₹${pricePerLitre}/L.`;
     onPreFillEnquiry(milkName, note);
   };
 
@@ -185,8 +195,14 @@ export const MilkCalculator: React.FC<MilkCalculatorProps> = ({ onPreFillEnquiry
                 <span className="text-lg text-emerald-200 font-medium">Litres / Day</span>
               </div>
 
-              <div className="text-xs text-stone-300 pb-4 border-b border-emerald-800/80">
-                Approximates to <strong className="text-white tabular-nums">{monthlyLitres} Litres</strong> per month for a family of {adults + children}.
+              <div className="text-xs text-stone-300 pb-3 border-b border-emerald-800/80 space-y-1">
+                <div>
+                  Approximates to <strong className="text-white tabular-nums">{monthlyLitres} Litres</strong> per month for a family of {adults + children}.
+                </div>
+                <div className="text-emerald-300 text-xs flex items-center justify-between pt-1">
+                  <span>Rate: ₹{pricePerLitre}/Litre</span>
+                  <span className="font-bold text-amber-300">Est. ₹{estimatedMonthlyCost.toLocaleString('en-IN')}/mo</span>
+                </div>
               </div>
 
               <div className="py-4 space-y-1.5 text-xs text-stone-300">

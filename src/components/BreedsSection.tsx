@@ -50,11 +50,25 @@ export const BreedsSection: React.FC = () => {
             
             {/* Visual Column */}
             <div className="lg:col-span-5 space-y-4">
-              <div className="h-64 sm:h-80 w-full rounded-xl overflow-hidden border border-stone-200 bg-stone-50">
-                <FarmIllustration
-                  variant={activeBreed.id === 'murrah-buffalo' ? 'buffalo-milk' : 'cow-milk'}
-                  className="w-full h-full"
-                />
+              <div className="h-64 sm:h-80 w-full rounded-xl overflow-hidden border border-stone-200 bg-stone-900 relative group">
+                {activeBreed.id === 'sahiwal-desi-cow' ? (
+                  <>
+                    <img
+                      src="/images/dairy_cow_farm.jpg"
+                      alt="Real Sahiwal Dairy Cow"
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3 bg-stone-950/80 backdrop-blur-xs text-white text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/20">
+                      Real Sahiwal Cattle Photograph
+                    </div>
+                  </>
+                ) : (
+                  <FarmIllustration
+                    variant="buffalo-milk"
+                    className="w-full h-full"
+                  />
+                )}
               </div>
 
               {/* Breed Origin and Quick Metrics */}

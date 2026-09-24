@@ -93,6 +93,12 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onSelectProduc
                     onOpenLightbox={() => setSelectedPhotoProduct(product)}
                   />
 
+                  {/* Price Tag Pill */}
+                  <span className="absolute top-3 left-3 bg-emerald-900/90 text-amber-300 font-bold px-2.5 py-1 rounded-md text-xs shadow-md border border-emerald-700/50 backdrop-blur-xs flex items-baseline gap-1 z-10">
+                    <span className="text-sm font-serif-display font-extrabold">{product.priceDisplay}</span>
+                    <span className="text-[10px] text-emerald-200 font-normal">/{product.priceUnit}</span>
+                  </span>
+
                   {product.tag && (
                     <span className="absolute top-3 right-3 text-[11px] font-semibold text-emerald-900 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-md border border-stone-200/80 shadow-xs z-10">
                       {product.tag}
@@ -108,9 +114,14 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onSelectProduc
 
                 {/* Content Area */}
                 <div className="p-5 space-y-3">
-                  {/* Category kicker */}
-                  <div className="text-[11px] font-medium uppercase tracking-wider text-emerald-800">
-                    {product.category === 'milk' ? 'Fresh Farm Milk' : 'Handcrafted Dairy'}
+                  {/* Category kicker & Price row */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-medium uppercase tracking-wider text-emerald-800">
+                      {product.category === 'milk' ? 'Fresh Farm Milk' : 'Handcrafted Dairy'}
+                    </span>
+                    <span className="text-xs font-bold text-emerald-900 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200/60">
+                      {product.priceDisplay} / {product.priceUnit}
+                    </span>
                   </div>
 
                   <h3
@@ -124,6 +135,14 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onSelectProduc
                     {product.shortDesc}
                   </p>
 
+                  {/* Price packaging breakdown banner */}
+                  {product.secondaryPrice && (
+                    <div className="text-[11px] text-stone-500 font-medium bg-stone-50 px-2.5 py-1 rounded border border-stone-100 flex items-center justify-between">
+                      <span className="text-stone-400">Available size</span>
+                      <span className="text-stone-700 font-semibold">{product.secondaryPrice}</span>
+                    </div>
+                  )}
+
                   {/* Composition / Quality specs */}
                   <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
                     <span>
@@ -135,7 +154,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onSelectProduc
                     </span>
                     <span aria-hidden="true">·</span>
                     <span className="text-[11px] text-stone-600 truncate max-w-[100px]">
-                      {product.packaging[0]}
+                      {product.packaging[0].split(' - ')[0]}
                     </span>
                   </div>
 
@@ -216,12 +235,22 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onSelectProduc
                   {selectedProductDetail.name}
                 </h3>
               </div>
-              <button
-                onClick={() => setSelectedProductDetail(null)}
-                className="text-stone-400 hover:text-stone-700 p-1.5 rounded-lg hover:bg-stone-100 text-sm font-bold"
-              >
-                ✕
-              </button>
+              <div className="flex items-center gap-3">
+                <div className="text-right">
+                  <div className="text-lg font-bold font-serif-display text-emerald-900">
+                    {selectedProductDetail.priceDisplay}
+                  </div>
+                  <div className="text-[10px] text-stone-500 font-medium">
+                    per {selectedProductDetail.priceUnit}
+                  </div>
+                </div>
+                <button
+                  onClick={() => setSelectedProductDetail(null)}
+                  className="text-stone-400 hover:text-stone-700 p-1.5 rounded-lg hover:bg-stone-100 text-sm font-bold"
+                >
+                  ✕
+                </button>
+              </div>
             </div>
 
             <p className="text-sm text-stone-600 leading-relaxed">

@@ -4,6 +4,10 @@ export interface ProductItem {
   category: 'milk' | 'traditional';
   shortDesc: string;
   fullDesc: string;
+  price: number;
+  priceUnit: string;
+  priceDisplay: string;
+  secondaryPrice?: string;
   fatContent: string;
   snfContent: string;
   bestFor: string;
@@ -54,10 +58,14 @@ export const PRODUCTS: ProductItem[] = [
     category: 'milk',
     shortDesc: 'Wholesome natural dairy milk fresh from the morning and evening milking sessions at our farm.',
     fullDesc: 'Our signature fresh milk is collected twice daily under sterile conditions. Completely free from preservatives, neutralizing agents, or synthetic additives. It retains its natural creaminess, essential proteins, and natural sweetness.',
+    price: 100,
+    priceUnit: '1 Litre',
+    priceDisplay: '₹100',
+    secondaryPrice: 'per Litre',
     fatContent: '6.0% - 6.5%',
     snfContent: '9.0%',
     bestFor: 'Daily consumption for families, nutritious milk drinks, and traditional home cooking',
-    packaging: ['1 Litre Pouch/Bottle', '2 Litre Can', '5 Litre Canister'],
+    packaging: ['1 Litre Pouch/Bottle - ₹100', '2 Litre Can - ₹200', '5 Litre Canister - ₹500'],
     shelfLife: 'Best consumed within 24-48 hours (keep refrigerated below 4°C)',
     tag: 'Daily Essential',
     highlights: ['Milked twice daily', 'Zero synthetic chemicals', 'Unadulterated wholesome taste']
@@ -68,10 +76,14 @@ export const PRODUCTS: ProductItem[] = [
     category: 'milk',
     shortDesc: 'Pure farm-fresh cow milk with a naturally gentle consistency, light texture, and pleasant sweetness.',
     fullDesc: 'Produced by our carefully nurtured indigenous cows raised in hygienic open barns. Our cow milk is naturally wholesome, easily digestible, and loved by children and elders alike. We maintain strict natural feeding routines without synthetic hormone boosters.',
+    price: 80,
+    priceUnit: '1 kg / Litre',
+    priceDisplay: '₹80',
+    secondaryPrice: 'per Litre',
     fatContent: '4.0% - 4.5%',
     snfContent: '8.5%',
     bestFor: 'Light breakfast beverages, tea and coffee, infant and elderly daily nutrition',
-    packaging: ['1 Litre Bottle', '2 Litre Bottle', 'Daily Subscription Delivery'],
+    packaging: ['1 Litre Bottle - ₹80', '2 Litre Bottle - ₹160', 'Daily Monthly Supply - ₹80/L'],
     shelfLife: 'Best consumed within 24-48 hours refrigerated',
     tag: 'Natural & Light',
     highlights: ['Naturally light & easy to digest', 'Golden tinge from carotene', 'Clean and gentle flavor']
@@ -82,10 +94,14 @@ export const PRODUCTS: ProductItem[] = [
     category: 'milk',
     shortDesc: 'Rich, full-cream buffalo milk from our healthy Murrah buffaloes; thick, creamy, and deeply satisfying.',
     fullDesc: 'Sourced from well-groomed Murrah buffaloes fed on green berseem and protein-rich oil cakes. Rich in natural milk fats and solid-not-fat (SNF), giving it an unmistakably thick body and dense cream layer upon boiling.',
+    price: 120,
+    priceUnit: '1 kg / Litre',
+    priceDisplay: '₹120',
+    secondaryPrice: 'per Litre',
     fatContent: '7.0% - 8.0%',
     snfContent: '9.2% - 9.5%',
     bestFor: 'Rich aromatic tea, homemade thick curd, malai paneer, rabdi, and traditional sweets',
-    packaging: ['1 Litre', '2 Litre', '5 Litre Bulk Cans'],
+    packaging: ['1 Litre - ₹120', '2 Litres - ₹240', '5 Litre Bulk Can - ₹600'],
     shelfLife: 'Best consumed within 48 hours refrigerated',
     tag: 'High Cream & Thick',
     highlights: ['Rich creamy texture', 'High natural butterfat', 'Dense malai formation']
@@ -96,10 +112,14 @@ export const PRODUCTS: ProductItem[] = [
     category: 'traditional',
     shortDesc: 'Traditional thick curd naturally cultured from pure dairy milk; velvety texture and balanced mild tang.',
     fullDesc: 'Prepared daily using fresh whole milk and active traditional culture. Naturally fermented without thickeners, gelatin, or stabilizers. It is thick enough to cut with a spoon with a soothing, authentic home-style aroma.',
+    price: 120,
+    priceUnit: '1 kg',
+    priceDisplay: '₹120',
+    secondaryPrice: '₹60 for 500g',
     fatContent: '6.0% - 6.5%',
     snfContent: '9.0%',
     bestFor: 'Accompaniment with parathas, refreshing lassi, chaas, raita, and probiotic gut support',
-    packaging: ['500g Container', '1 kg Earthen Matka / Pack', '2 kg Family Pack'],
+    packaging: ['500g Container - ₹60', '1 kg Earthen Matka - ₹120', '2 kg Family Pack - ₹240'],
     shelfLife: '4-5 days refrigerated at 2-6°C',
     tag: 'Probiotic & Thick',
     highlights: ['Naturally set traditional dahi', 'Zero artificial starch or gelatin', 'Rich spoonable consistency']
@@ -110,10 +130,14 @@ export const PRODUCTS: ProductItem[] = [
     category: 'traditional',
     shortDesc: 'Freshly churned farm butter with an authentic rural flavor and velvety, unctuous melt.',
     fullDesc: 'Crafted following classic dairy churning techniques from fresh sweet cream. Clean, pure, and free from industrial coloring agents, excessive salt, or preservatives. Delivers the authentic nostalgic taste of country butter.',
+    price: 300,
+    priceUnit: '500g',
+    priceDisplay: '₹300',
+    secondaryPrice: '₹600 for 1 kg',
     fatContent: '80% - 82%',
     snfContent: '1.5%',
     bestFor: 'Hot parathas, sarson ka saag, warm rotis, and baking wholesome delicacies',
-    packaging: ['250g Block', '500g Tub', '1 kg Fresh Pack'],
+    packaging: ['250g Block - ₹150', '500g Tub - ₹300', '1 kg Pack - ₹600'],
     shelfLife: '10-14 days refrigerated',
     tag: 'Handcrafted',
     highlights: ['Sweet cream churned', 'Natural pale color', 'Zero chemical preservatives']
@@ -124,10 +148,14 @@ export const PRODUCTS: ProductItem[] = [
     category: 'traditional',
     shortDesc: 'Aromatic slow-simmered pure dairy ghee with a rich golden color and fine granular (danedaar) texture.',
     fullDesc: 'Our ghee is prepared through traditional slow cooking of cultured dairy butter until all moisture evaporates, yielding a deeply fragrant, golden clarified butter. Renowned for its rich nutty aroma and granular texture.',
+    price: 1200,
+    priceUnit: '1 kg',
+    priceDisplay: '₹1,200',
+    secondaryPrice: '₹600 for 500g',
     fatContent: '99.7%',
     snfContent: '< 0.3%',
     bestFor: 'Daily cooking, tadka for dals, festival sweets, spreading on warm chapatis',
-    packaging: ['500 ml Glass Jar', '1 Litre Glass Jar', '5 Litre Tin/Container'],
+    packaging: ['500 ml Glass Jar - ₹600', '1 Litre (1 kg) Glass Jar - ₹1,200', '5 Litres Tin - ₹5,900'],
     shelfLife: '9-12 months stored in a cool, dry place',
     tag: 'Danedaar & Pure',
     highlights: ['Slow-simmered perfection', 'Granular (danedaar) texture', 'Long shelf-stable goodness']
@@ -138,10 +166,14 @@ export const PRODUCTS: ProductItem[] = [
     category: 'traditional',
     shortDesc: 'Dense, rich sweet cream skimmed directly from fresh whole milk; perfect for culinary delicacies.',
     fullDesc: 'Freshly separated from pure dairy milk without chemical homogenizers or stabilizers. Highly versatile in North Indian cooking, gravies, desserts, and fruit salads, bringing luxurious body and sweetness.',
+    price: 400,
+    priceUnit: '1 kg',
+    priceDisplay: '₹400',
+    secondaryPrice: '₹200 for 500g',
     fatContent: '25% - 30%',
     snfContent: '6.5%',
     bestFor: 'Shahi paneer, creamy gravies, fruit cream, desserts, and coffee',
-    packaging: ['250g Tub', '500g Tub'],
+    packaging: ['250g Tub - ₹100', '500g Tub - ₹200', '1 kg Pack - ₹400'],
     shelfLife: '3-4 days refrigerated',
     tag: 'Rich & Natural',
     highlights: ['Thick natural viscosity', 'No artificial emulsifiers', 'Rich dairy aroma']

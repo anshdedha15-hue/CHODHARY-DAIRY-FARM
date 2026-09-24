@@ -96,6 +96,26 @@ export const AboutSection: React.FC = () => {
 
           {/* Right Column: Farm Facts Card */}
           <div className="lg:col-span-5 space-y-4">
+            
+            {/* Real Farm Pasture Photograph Card */}
+            <div className="relative rounded-2xl overflow-hidden border border-stone-200/90 shadow-sm bg-stone-900 h-52 group">
+              <img
+                src="/images/dairy_cows_pasture.jpg"
+                alt="Choudhary Dairy Farm cattle grazing"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute bottom-3 left-3 right-3 text-white">
+                <span className="text-[10px] font-bold text-amber-300 uppercase tracking-wider block">
+                  Dairy Herd Pasture
+                </span>
+                <span className="text-xs font-semibold block text-stone-100">
+                  Ethically reared dairy cows and buffaloes with open outdoor space
+                </span>
+              </div>
+            </div>
+
             <div className="bg-emerald-950 text-stone-200 p-6 sm:p-8 rounded-2xl border border-emerald-900 shadow-md">
               <span className="text-xs font-semibold uppercase tracking-wider text-amber-400">
                 Farm Standard Checklist

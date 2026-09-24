@@ -1,13 +1,71 @@
-import React, { useMemo } from 'react';
-import { Phone, ArrowRight, ShieldCheck, Sparkles, MapPin, Clock, CheckCircle2 } from 'lucide-react';
+import React, { useMemo, useState, useEffect } from 'react';
+import { Phone, ArrowRight, ShieldCheck, Sparkles, MapPin, Clock, CheckCircle2, Camera, ZoomIn, Upload, X } from 'lucide-react';
 import { FARM_CONTACT } from '../data/farmData.ts';
-import { FarmIllustration } from './FarmIllustrations.tsx';
 
 interface HeroProps {
   onOpenEnquiry: () => void;
 }
 
+const HERO_PHOTOS = [
+  {
+    id: 'shed',
+    title: 'Milking Shed & Stalls',
+    caption: 'Hygienic open-air farm shelter with clean stalls & feeding troughs',
+    src: '/images/dairy_farm_banner.jpg',
+  },
+  {
+    id: 'sahiwal',
+    title: 'Sahiwal Dairy Cow',
+    caption: 'Purebred Indian dairy cow fed on organic green fodder',
+    src: '/images/dairy_cow_farm.jpg',
+  },
+  {
+    id: 'pasture',
+    title: 'Cattle & Pasture',
+    caption: 'Healthy cows in lush green open grazing paddock',
+    src: '/images/dairy_cows_pasture.jpg',
+  },
+];
+
 export const Hero: React.FC<HeroProps> = ({ onOpenEnquiry }) => {
+  const [activePhotoIdx, setActivePhotoIdx] = useState(0);
+  const [customPhoto, setCustomPhoto] = useState<string | null>(null);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('custom_hero_banner_photo');
+      if (saved) {
+        setCustomPhoto(saved);
+      }
+    } catch {
+      // localStorage may fail in restricted context
+    }
+  }, []);
+
+  const handleCustomPhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          const res = event.target.result as string;
+          setCustomPhoto(res);
+          try {
+            localStorage.setItem('custom_hero_banner_photo', res);
+          } catch {
+            // ignore
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const currentPhotoSrc = customPhoto || HERO_PHOTOS[activePhotoIdx].src;
+  const currentPhotoTitle = customPhoto ? 'My Dairy Farm Photo' : HERO_PHOTOS[activePhotoIdx].title;
+  const currentPhotoCaption = customPhoto ? 'Custom farm photograph' : HERO_PHOTOS[activePhotoIdx].caption;
+
   // Check if current time is within 5:00 AM - 7:00 PM
   const isOpen = useMemo(() => {
     const now = new Date();
@@ -110,23 +168,92 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquiry }) => {
             </p>
           </div>
 
-          {/* Right Column: Visual Showcase Card */}
+          {/* Right Column: Visual Showcase Card with Real Dairy Farm Photography */}
           <div className="lg:col-span-5">
-            <div className="relative rounded-2xl overflow-hidden border border-stone-200/90 bg-white shadow-xl">
+            <div className="relative rounded-2xl overflow-hidden border border-stone-200/90 bg-white shadow-xl flex flex-col">
               
-              {/* Artistic Vector Illustration of the Dairy Farm */}
-              <div className="h-64 sm:h-76 w-full relative">
-                <FarmIllustration variant="hero" className="w-full h-full" />
+              {/* Real Dairy Farm Photography Banner Area */}
+              <div
+                onClick={() => setIsLightboxOpen(true)}
+                className="h-72 sm:h-80 w-full relative overflow-hidden bg-stone-900 group cursor-pointer"
+                title="Click to zoom and view full dairy farm photo"
+              >
+                <img
+                  src={currentPhotoSrc}
+                  alt={currentPhotoTitle}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
                 
+                {/* Subtle gradient vignette */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 pointer-events-none" />
+
                 {/* Floating Farm Badge on Image */}
-                <div className="absolute top-3 left-3 bg-stone-900/90 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-md flex items-center gap-2 border border-stone-700/60">
+                <div className="absolute top-3 left-3 bg-stone-950/85 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 border border-white/15 shadow-sm">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="font-medium">Choudhary Dairy Farm · Old Gardhi Mendu</span>
+                  <span className="font-semibold">Choudhary Dairy Farm · Real Photo</span>
+                </div>
+
+                {/* Zoom Indicator */}
+                <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-xs text-white p-2 rounded-lg opacity-85 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 text-xs">
+                  <ZoomIn className="w-3.5 h-3.5 text-amber-300" />
+                  <span className="hidden sm:inline text-[11px]">Inspect</span>
+                </div>
+
+                {/* Bottom Caption on Photo */}
+                <div className="absolute bottom-3 left-3 right-3 text-white pointer-events-none">
+                  <div className="text-xs font-semibold text-amber-300 flex items-center gap-1.5">
+                    <Sparkles className="w-3 h-3" />
+                    <span>{currentPhotoTitle}</span>
+                  </div>
+                  <p className="text-[11px] text-stone-200 mt-0.5 line-clamp-1">
+                    {currentPhotoCaption}
+                  </p>
                 </div>
               </div>
 
+              {/* Photo Selector Switcher & Custom Upload Row */}
+              <div className="px-3.5 py-2.5 bg-stone-100/90 border-t border-b border-stone-200 flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-1">
+                  {HERO_PHOTOS.map((photo, idx) => (
+                    <button
+                      key={photo.id}
+                      type="button"
+                      onClick={() => {
+                        setCustomPhoto(null);
+                        setActivePhotoIdx(idx);
+                      }}
+                      className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-colors ${
+                        !customPhoto && activePhotoIdx === idx
+                          ? 'bg-white text-emerald-950 shadow-xs border border-stone-200'
+                          : 'text-stone-600 hover:text-stone-900 hover:bg-stone-200/60'
+                      }`}
+                    >
+                      {photo.title.split(' ')[0]}
+                    </button>
+                  ))}
+                  {customPhoto && (
+                    <span className="px-2 py-0.5 text-[11px] font-semibold bg-emerald-800 text-white rounded">
+                      Custom
+                    </span>
+                  )}
+                </div>
+
+                {/* Farm Owner Upload Button */}
+                <label className="cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-stone-700 bg-white border border-stone-300 rounded-md hover:bg-stone-50 transition-colors shadow-2xs">
+                  <Upload className="w-3 h-3 text-emerald-700" />
+                  <span className="text-[11px]">Upload Photo</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleCustomPhotoUpload}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+
               {/* Quick Farm Information Bar below image */}
-              <div className="p-5 bg-stone-50/70 space-y-4 border-t border-stone-200">
+              <div className="p-4 sm:p-5 bg-stone-50/70 space-y-4">
                 <div className="grid grid-cols-2 gap-4 text-left">
                   <div>
                     <div className="text-xs text-stone-500 font-medium">Location</div>
@@ -164,6 +291,49 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquiry }) => {
         </div>
 
       </div>
+
+      {/* Lightbox / Fullscreen Modal for Real Dairy Farm Photo */}
+      {isLightboxOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-3 sm:p-6 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="relative bg-stone-900 max-w-4xl w-full rounded-2xl overflow-hidden border border-stone-700 shadow-2xl flex flex-col">
+            <div className="p-4 border-b border-stone-800 flex items-center justify-between">
+              <div>
+                <span className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider">
+                  Choudhary Dairy Farm Photography
+                </span>
+                <h3 className="text-lg font-bold text-white">
+                  {currentPhotoTitle}
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsLightboxOpen(false)}
+                className="p-2 text-stone-400 hover:text-white rounded-lg hover:bg-stone-800 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="relative max-h-[75vh] w-full overflow-hidden bg-black flex items-center justify-center">
+              <img
+                src={currentPhotoSrc}
+                alt={currentPhotoTitle}
+                referrerPolicy="no-referrer"
+                className="max-h-[75vh] w-auto max-w-full object-contain"
+              />
+            </div>
+
+            <div className="p-4 bg-stone-900 border-t border-stone-800 flex items-center justify-between text-xs text-stone-300">
+              <p>{currentPhotoCaption}</p>
+              <button
+                onClick={() => setIsLightboxOpen(false)}
+                className="px-3.5 py-1.5 bg-stone-800 hover:bg-stone-700 text-white rounded-lg transition-colors font-medium"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
